@@ -1,0 +1,77 @@
+.form {
+    margin: 2vh auto;
+    display: flex;
+    justify-content: center;
+    width: 40vw;
+}
+
+.textInput {
+    width: 25vw !important;
+}
+
+.btn {
+    width: 10vw !important;
+    margin-left: 2vw !important;
+    height: 50px;
+}
+
+@media only screen and (max-width: 760px){
+    .form {
+        width: 90vw;
+    }
+    .textInput{
+        width: 60vw !important;
+    }
+}
+
+.flexContainer {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+
+@media (max-width: 760px) {
+    .flexContainer {
+        flex-direction: column;
+    }
+    .btn{
+        margin-top: 2vh !important;
+        width: 15vw !important;
+        height: 40px;
+        margin-left: 20vw !important;
+    }
+}
+
+.invalid {
+    margin: auto;
+    width: 40vw;
+}
+
+.broadComponent {
+    margin: 2vh auto;
+    width: 90vw;
+    background-color: rgb(193, 232, 247);
+    /* background-color: rgb(172, 237, 255); */
+    border-radius: 6px;
+    border: 1.5px solid black;
+    padding-bottom: 8px;
+}
+
+.narrowOuter {
+    margin: 2vh auto;
+    width: 90vw;
+}
+
+.narrowComponent {
+    background-color: rgb(193, 232, 247);
+    /* background-color: rgb(176, 234, 250); */
+    border-radius: 4px;
+    border: 1.5px solid black;
+    padding-bottom: 6px !important;
+}
+
+@media only screen and (max-width: 760px) {
+    .invalid {
+        width: 60vw;
+    }
+}
