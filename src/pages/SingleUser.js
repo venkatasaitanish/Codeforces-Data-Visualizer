@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect, useRef} from 'react';
 // import TextField from '@material-ui/core/TextField';
 // import Button from '@material-ui/core/Button';
 import axios from 'axios';
@@ -10,7 +10,8 @@ import styles from './SingleUser.module.css';
 
 const SingleUser = () => {
 
-    const [currname, setCurrname] = useState('');
+    const inp = useRef(null);
+    //const [currname, setCurrname] = useState('');
     const [username, setUsername] = useState('');
     const [userInfo, setUserInfo] = useState('');
     const [userContests, setUserContests] = useState('');
@@ -19,9 +20,8 @@ const SingleUser = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // console.log(e.target);
-        setUsername(currname);
-        // console.log(currname, username);
+        setUsername(inp.current.value);
+        //setUsername(currname);
         //fetchData();
     }
 
@@ -46,7 +46,7 @@ const SingleUser = () => {
                     </div>
 
                     <div className={styles.broadComponent} >
-                        <ContestRatingGraph userContests={userContests} />
+                        <ContestRatingGraph userContests={userContests} maxRating={userInfo.maxRating} />
                     </div>
 
                     <div className={styles.broadComponent}>
@@ -136,10 +136,11 @@ const SingleUser = () => {
                 <div className={styles.flexContainer}>
                     <TextField
                         className={styles.textInput}
-                        onChange={(e) => setCurrname(e.target.value)}
+                        //onChange={(e) => setCurrname(e.target.value)}
                         label="Codeforces Username"
                         variant="outlined"
                         color="primary"
+                        inputRef={inp}
                         required
                     />
                     <Button

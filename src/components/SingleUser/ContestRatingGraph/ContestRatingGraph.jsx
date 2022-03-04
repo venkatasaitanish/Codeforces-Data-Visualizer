@@ -4,7 +4,8 @@ import moment from 'moment';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, } from 'chart.js';
 ChartJS.register( CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend );
 
-const ContestRatingGraph = ({userContests}) => {
+const ContestRatingGraph = ({userContests, maxRating}) => {
+    let pointBackgroundColors = [];
     const data = {
         labels: [],
         datasets: [
@@ -14,6 +15,7 @@ const ContestRatingGraph = ({userContests}) => {
                 // fill: false,
                 backgroundColor: ['rgb(28, 109, 208, 0.9)'],
                 borderColor: ['rgb(28, 109, 208, 0.4)'],
+                pointBackgroundColor : pointBackgroundColors,
             }
         ]
     };
@@ -26,6 +28,15 @@ const ContestRatingGraph = ({userContests}) => {
         
         let momentDate = moment(date).format('MMM D, YYYY');
         data.datasets[0].data.push({x: momentDate , y: rating});
+    }
+
+    for(let i=0; i<data.datasets[0].data.length; i++){
+        if(data.datasets[0].data[i].y === maxRating){
+            pointBackgroundColors.push('red');
+        }
+        else{
+            pointBackgroundColors.push('rgb(28, 109, 208, 0.9)');
+        }
     }
 
     const options = {

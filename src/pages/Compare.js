@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { Grid, Button, TextField} from '@material-ui/core';
@@ -8,13 +8,15 @@ import styles from './Compare.module.css';
 
 const Compare = () => {
 
-    const [currname1, setCurrname1] = useState('');
+    const inp1 = useRef(null);
+    //const [currname1, setCurrname1] = useState('');
     const [username1, setUsername1] = useState('');
     const [userInfo1, setUserInfo1] = useState('');
     const [userContests1, setUserContests1] = useState('');
     const [userSubmissions1, setUserSubmissions1] = useState('');
 
-    const [currname2, setCurrname2] = useState('');
+    const inp2 = useRef(null);
+    //const [currname2, setCurrname2] = useState('');
     const [username2, setUsername2] = useState('');
     const [userInfo2, setUserInfo2] = useState('');
     const [userContests2, setUserContests2] = useState('');
@@ -24,8 +26,12 @@ const Compare = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setUsername1(currname1);
-        setUsername2(currname2);
+        let user1 = inp1.current.value;
+        let user2 = inp2.current.value;
+        setUsername1(user1.toLowerCase());
+        setUsername2(user2.toLowerCase());
+        //setUsername1(currname1);
+        //setUsername2(currname2);
     }
 
     function renderData() {
@@ -50,7 +56,7 @@ const Compare = () => {
                     </div>
 
                     <div className={styles.broadComponent}>
-                        <CompareContestRatingGraph userContests1={userContests1} userContests2={userContests2} username1={username1} username2={username2} />
+                        <CompareContestRatingGraph userContests1={userContests1} userContests2={userContests2} username1={username1} username2={username2} maxRating1={userInfo1.maxRating} maxRating2={userInfo2.maxRating} />
                     </div>
 
                     <div className={styles.broadComponent}>
@@ -91,6 +97,17 @@ const Compare = () => {
                 <Alert severity="error">
                     <AlertTitle> <strong>Oops!</strong> </AlertTitle>
                     It seems like you entered an <strong>invalid username</strong>.
+                </Alert>
+            </div>
+        );
+    }
+
+    function renderWarning() {
+        return (
+            <div className={styles.invalid}>
+                <Alert severity="warning">
+                    <AlertTitle> <strong>Oops!</strong> </AlertTitle>
+                    Please enter 2 different usernames to compare.
                 </Alert>
             </div>
         );
@@ -143,18 +160,20 @@ const Compare = () => {
                 <div className={styles.flexContainer}>
                     <TextField
                         className={styles.textInput}
-                        onChange={(e) => setCurrname1(e.target.value)}
+                        //onChange={(e) => setCurrname1(e.target.value)}
                         label="Codeforces Username 1"
                         variant="outlined"
                         color="primary"
+                        inputRef={inp1}
                         required
                     />
                     <TextField
                         className={styles.textInput}
-                        onChange={(e) => setCurrname2(e.target.value)}
+                        //onChange={(e) => setCurrname2(e.target.value)}
                         label="Codeforces Username 2"
                         variant="outlined"
                         color="primary"
+                        inputRef={inp2}
                         required
                     />
                     <Button
@@ -166,7 +185,7 @@ const Compare = () => {
                 </div>
 
             </form>
-            {(username1 !== '' && username2 !== '') ? (error ? renderError() : renderData()) : null}
+            {(username1 !== '' && username2 !== '') ? (error ? renderError() : (username1===username2) ? renderWarning() : renderData()) : null}
         </div>
     )
 }

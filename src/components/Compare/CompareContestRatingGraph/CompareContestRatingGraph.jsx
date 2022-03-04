@@ -4,9 +4,9 @@ import moment from 'moment';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, } from 'chart.js';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-
-const CompareContestRatingGraph = ({userContests1, userContests2, username1, username2}) => {
-
+const CompareContestRatingGraph = ({userContests1, userContests2, username1, username2, maxRating1, maxRating2}) => {
+    let pointBackgroundColors1 = [];
+    let pointBackgroundColors2 = [];
     const data = {
         labels: [],
         datasets: [
@@ -16,6 +16,7 @@ const CompareContestRatingGraph = ({userContests1, userContests2, username1, use
                 fill: false,
                 backgroundColor: 'red',
                 borderColor: 'rgba(255, 99, 132, 0.5)',
+                pointBackgroundColor: pointBackgroundColors1,
             },
             {
                 label: username2,
@@ -23,8 +24,8 @@ const CompareContestRatingGraph = ({userContests1, userContests2, username1, use
                 fill: false,
                 backgroundColor: 'blue',
                 borderColor: 'rgba(28, 109, 208, 0.5)',
+                pointBackgroundColor: pointBackgroundColors2,
             }
-
         ]
     };
 
@@ -70,6 +71,24 @@ const CompareContestRatingGraph = ({userContests1, userContests2, username1, use
         }
         else{
             data.datasets[1].data.push(null);
+        }
+    }
+
+    for(let i=0; i<data.datasets[0].data.length; i++) {
+        if(data.datasets[0].data[i] === maxRating1){
+            pointBackgroundColors1.push('white');
+        }
+        else{
+            pointBackgroundColors1.push('red');
+        }
+    }
+
+    for(let i=0; i<data.datasets[1].data.length; i++){
+        if(data.datasets[1].data[i] === maxRating2){
+            pointBackgroundColors2.push('white');
+        }
+        else{
+            pointBackgroundColors2.push('blue');
         }
     }
 

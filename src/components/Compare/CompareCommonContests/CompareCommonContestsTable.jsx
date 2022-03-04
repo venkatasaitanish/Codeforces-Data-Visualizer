@@ -70,7 +70,7 @@ const CompareCommonContestsTable = ({ userContests1, userContests2, username1, u
                             .slice(page*rowsPerPage, page*rowsPerPage+rowsPerPage)
                             .map((row) => {
                             return(
-                                <TableRow key={row.name} style={row.diff > 0 ? { backgroundColor: 'rgba(28, 109, 208, 0.4)' } : { backgroundColor: 'rgba(255, 99, 132, 0.4)' }}>
+                                <TableRow key={row.name} style={ row.diff === 0 ? { backgroundColor: 'rgba(255, 206, 86, 0.4)' } : row.diff>0 ? { backgroundColor: 'rgba(28, 109, 208, 0.4)' } : { backgroundColor: 'rgba(255, 99, 132, 0.4)' } }>
                                     <TableCell component='th' scope='row'><Link href={row.url} underline='hover' target='_blank'>{row.name}</Link></TableCell>
                                     <TableCell align='right'>{row.rank1}</TableCell>
                                     <TableCell align='right'>{row.rank2}</TableCell>
